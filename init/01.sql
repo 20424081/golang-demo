@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `task` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `status` boolean DEFAULT false,
   `user_id` bigint DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
