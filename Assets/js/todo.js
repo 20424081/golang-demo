@@ -1,24 +1,4 @@
 $( document ).ready(function() {
-    function getTodos(){
-        var urlApi = url + "/api/todos";
-        CallApi(urlApi, 'GET', {}, true, (result)=>{
-            todos = result.result ? result.result : [];
-            const tbBody = $("#tableBodyTodos");
-            tbBody.empty();
-            todos.forEach(todo => {
-                const tr = `<tr>
-                <th scope="row">${todo.id}</th>
-                <td>${todo.task}</td>
-                <td>${todo.status === true ? '<i style="color:#02a518;" class="fa fa-check" aria-hidden="true"></i>' : '<i class="fa fa-clock-o" style="color:#a53d02;" aria-hidden="true"></i>'}</td>
-                <td>
-                    <a type="button" class="btn-icon mr-2" id="btnUpdateTodo" title="Update Todo"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                    <a type="button" class="btn-icon mx-2" id="btnDeleteTodo" title="Delete Todo"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
-                </td>
-                </tr>`;
-                tbBody.append(tr);
-            });
-        })
-    }
     $("#btnLoadTodos").on("click", ()=>{
         getTodos();
     });

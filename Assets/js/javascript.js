@@ -6,13 +6,12 @@ const typeNotiError = 'error';
 const typeNotiinfo = 'info';
 
 function CallApi(url, method="GET", data={}, isAuth = fasle, callbackSuccess){
-    $.cookie('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkxlIFZhbiBUcm9uZyIsImVtYWlsIjoidHJvbmdsZXZhbjk4QGdtYWlsLmNvbSIsImV4cCI6MTY1MjQzNTU2N30.K_5zhos-_VnngQcKCVFVRaD_rPt5cJljAN9Qt7I-B3s');
     var headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json' 
     }
     if(isAuth){
-        headers["Authorization"] = "Bearer " + $.cookie('token');
+        headers["Authorization"] = "Bearer " + $.cookie('access_token');
     }
     $.ajax({
         type: method,
@@ -50,6 +49,27 @@ function getID($row){
         id = $(this).text();
     });
     return id;
+}
+
+function getTodos(){
+    var urlApi = url + "/api/todos";
+    CallApi(urlApi, 'GET', {}, true, (result)=>{
+        todos = result.result ? result.result : [];
+        const tbBody = $("#tableBodyTodos");
+        tbBody.empty();
+        todos.forEach(todo => {
+            const tr = `<tr>
+            <th scope="row">${todo.id}</th>
+            <td>${todo.task}</td>
+            <td>${todo.status === true ? '<i style="color:#02a518;" class="fa fa-check" aria-hidden="true"></i>' : '<i class="fa fa-clock-o" style="color:#a53d02;" aria-hidden="true"></i>'}</td>
+            <td>
+                <a type="button" class="btn-icon mr-2" id="btnUpdateTodo" title="Update Todo"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <a type="button" class="btn-icon mx-2" id="btnDeleteTodo" title="Delete Todo"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+            </td>
+            </tr>`;
+            tbBody.append(tr);
+        });
+    })
 }
 
 function showNoti(type = "success", message){
