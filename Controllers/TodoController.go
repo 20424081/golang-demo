@@ -21,6 +21,9 @@ func GetTodos(c echo.Context) (err error) {
 				Message: "Have error",
 			})
 	}
+	if filter.Limit <= 0{
+		filter.Limit = 10
+	}
 	err = Models.GetTodos(&todos, Utils.UnitToString(userId), filter.Limit, filter.Offset, filter.Search)
 	count, err = Models.CountTodos(Utils.UnitToString(userId), filter.Search)
 	if err != nil {
